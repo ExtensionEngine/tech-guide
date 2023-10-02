@@ -11,3 +11,14 @@
 ## 📦 Package List
 
 1. [Prettier config](https://github.com/ExtensionEngine/prettier-config) - Studion Prettier config
+
+## 🙌 Want to contribute?
+
+We are open to all kinds of contributions. If you want to:
+
+- 🤔 Suggest an idea
+- 🐛 Report an issue
+- 📖 Improve documentation
+- 👨‍💻 Contribute to the code
+
+You are more than welcome.
