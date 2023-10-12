@@ -4,13 +4,14 @@
     alt="Studion Logo" 
     width="320" 
     style="padding: 10px; background-color: white;">
-  <h1>Welcome to the Studion Tech Guide repository</h1>
+  <h1>Welcome to the Studion Platform Tech Guide repository</h1>
   <h3><strong>The central place for all common packages</strong></h3>
 </div>
 
 ## 📦 Package List
 
 1. [Prettier config](https://github.com/ExtensionEngine/prettier-config) - Studion Prettier config
+1. [Infra Code Blocks](https://github.com/ExtensionEngine/infra-code-blocks) - Studion common infra components
 
 ## 🙌 Want to contribute?
 
