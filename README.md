@@ -11,7 +11,11 @@
 ## 📦 Package List
 
 1. [Prettier config](https://github.com/ExtensionEngine/prettier-config) - Studion Prettier config
-1. [Infra Code Blocks](https://github.com/ExtensionEngine/infra-code-blocks) - Studion common infra components
+2. [Infra Code Blocks](https://github.com/ExtensionEngine/infra-code-blocks) - Studion common infra components
+
+## Recipes
+
+1. [Docker image guide](./recipes/docker-image-guide.md)
 
 ## 🙌 Want to contribute?
 
