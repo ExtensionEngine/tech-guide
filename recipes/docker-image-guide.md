@@ -69,8 +69,9 @@ CMD [ "node", "index.js" ]
 ### Important notes:
 
 1. **Always** specify `.dockerignore` files to reduce security risks and image
-   footprint size. The file should at least include `node_modules`, `.git` and
-   `.env` files.
+   footprint size. Also, by avoiding sending unwanted files to the builder,
+   build speed is also improved. The file should at least include
+   `node_modules`, `.git` and `.env` files.
 
 2. [The order of Dockerfile instructions matters](https://docs.docker.com/build/guide/layers/).
 
@@ -128,11 +129,11 @@ CMD [ "node", "index.js" ]
 
 - devDependencies are not essential for the application to work. By installing
   only production dependencies we are reducing security risks and image
-  footprint size.
+  footprint size and also improving build speed.
 
 10. `COPY --chown=node:node . .`
 
-- Copy the rest of the codebase as described in step 5.
+- Copy the rest of the codebase as described in step 8.
 
 11. `USER node`
 
