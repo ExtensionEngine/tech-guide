@@ -118,6 +118,8 @@ CMD [ "node", "index.js" ]
 - The default Docker behavior is that copied files are owned by `root`.
   By specifying `--chown=node:node` we are telling that `package\*.json` files
   will be owned by `node` user instead of `root`.
+  `node` is the least privileged user and by selecting it, we are limiting the
+  number of actions an attacker can do in case our application gets compromised.
 - It's important to notice here that we are copying `package*.json` files
   separate from the rest of the codebase. By doing so, we are leveraging Docker
   layers caching functionality mentioned in step 2. When source code
