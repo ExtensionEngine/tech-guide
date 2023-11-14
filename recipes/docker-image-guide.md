@@ -124,7 +124,7 @@ CMD [ "node", "index.js" ]
 - If you are building your image for production this ensures that all frameworks
   and libraries are using the optimal settings for performance and security.
 
-9. `COPY --chown=node:node package*.json .`
+9. `COPY package*.json .`
 
 - It's important to notice here that we are copying `package*.json` files
   separate from the rest of the codebase. By doing so, we are leveraging Docker
@@ -170,6 +170,7 @@ CMD [ "node", "index.js" ]
 ├── dist
 │   ├── index.js
 ├── node_modules
+├── tsconfig.json
 ├── package.json
 ├── package-lock.json
 ├── Dockerfile
