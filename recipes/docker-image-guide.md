@@ -54,8 +54,7 @@ FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bb
 WORKDIR /usr/src/app
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#3-optimize-nodejs-tooling-for-production
 ENV NODE_ENV production
-# https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#4-dont-run-containers-as-root
-COPY --chown=node:node package*.json .
+COPY package*.json .
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#2-install-only-production-dependencies-in-the-nodejs-docker-image
 RUN npm ci --only=production
 
@@ -127,11 +126,6 @@ CMD [ "node", "index.js" ]
 
 9. `COPY --chown=node:node package*.json .`
 
-- The default Docker behavior is that copied files are owned by `root`.
-  By specifying `--chown=node:node` we are telling that `package\*.json` files
-  will be owned by `node` user instead of `root`.
-  `node` is the least privileged user and by selecting it, we are limiting the
-  number of actions an attacker can do in case our application gets compromised.
 - It's important to notice here that we are copying `package*.json` files
   separate from the rest of the codebase. By doing so, we are leveraging Docker
   layers caching functionality mentioned in step 2. When source code
@@ -149,6 +143,11 @@ CMD [ "node", "index.js" ]
 
 - From the install phase we are copying only the node_modules folder in order
   to keep the final Docker image minimal.
+- The default Docker behavior is that copied files are owned by `root`.
+  By specifying `--chown=node:node` we are telling that `node_modules` files
+  will be owned by `node` user instead of `root`.
+  `node` is the least privileged user and by selecting it, we are limiting the
+  number of actions an attacker can do in case our application gets compromised.
 
 12. `COPY --chown=node:node ./index.js .`
 
@@ -187,14 +186,14 @@ ENTRYPOINT ["dumb-init", "--"]
 FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bbd7e0822f9ca8603 AS build
 WORKDIR /usr/src/app
 COPY package*.json .
-RUN npm install
-COPY . .
+RUN npm ci
+COPY ./src .
 RUN npm run build
 
 FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bbd7e0822f9ca8603 AS install
 WORKDIR /usr/src/app
 ENV NODE_ENV production
-COPY --chown=node:node package*.json .
+COPY package*.json .
 RUN npm ci --only=production
 
 FROM base AS configure
