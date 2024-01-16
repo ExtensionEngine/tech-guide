@@ -56,7 +56,9 @@ WORKDIR /usr/src/app
 ENV NODE_ENV production
 COPY package*.json .
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#2-install-only-production-dependencies-in-the-nodejs-docker-image
-RUN npm ci --only=production
+# when NODE_ENV is set to production, npm ci automatically omits dev dependencies
+# https://docs.npmjs.com/cli/v10/commands/npm-ci#omit
+RUN npm ci
 
 FROM base AS configure
 WORKDIR /usr/src/app
