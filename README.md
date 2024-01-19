@@ -16,6 +16,7 @@
 ## Recipes
 
 1. [Docker image guide](./recipes/docker-image-guide.md)
+1. [SES Bounce Handling](./recipes/ses-bounce-handling.md)
 
 ## 🙌 Want to contribute?
 
