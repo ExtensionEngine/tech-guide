@@ -189,7 +189,7 @@ ENTRYPOINT ["dumb-init", "--"]
 FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bbd7e0822f9ca8603 AS build
 WORKDIR /usr/src/app
 COPY package*.json .
-RUN npm ci --omit=dev
+RUN npm ci
 COPY ./src tsconfig.json ./
 RUN npm run build
 
