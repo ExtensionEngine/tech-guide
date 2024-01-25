@@ -56,7 +56,9 @@ WORKDIR /usr/src/app
 ENV NODE_ENV production
 COPY package*.json .
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#2-install-only-production-dependencies-in-the-nodejs-docker-image
-RUN npm ci --only=production
+# when NODE_ENV is set to production, npm ci automatically omits dev dependencies
+# https://docs.npmjs.com/cli/v10/commands/npm-ci#omit
+RUN npm ci --omit=dev
 
 FROM base AS configure
 WORKDIR /usr/src/app
@@ -133,7 +135,7 @@ CMD [ "node", "index.js" ]
   By copying source code files after dependency installation, we are only
   re-executing those steps that come after that step, including that step.
 
-10. `RUN npm ci --only=production`
+10. `RUN npm ci --omit=dev`
 
 - devDependencies are not essential for the application to work. By installing
   only production dependencies we are reducing security risks and image
@@ -195,7 +197,7 @@ FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bb
 WORKDIR /usr/src/app
 ENV NODE_ENV production
 COPY package*.json .
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 FROM base AS configure
 WORKDIR /usr/src/app
