@@ -19,6 +19,7 @@ included in the project:
 ├── package-lock.json
 ├── Dockerfile
 ├── .dockerignore
+├── .npmrc
 ```
 
 ```js
@@ -55,6 +56,9 @@ WORKDIR /usr/src/app
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#3-optimize-nodejs-tooling-for-production
 ENV NODE_ENV production
 COPY package*.json .
+# we can mount .npmrc secret file without leaving the secrets in the final built image
+# refer to docs https://docs.docker.com/build/building/secrets/
+RUN --mount=type=secret,id=npmrc_secret,target=/usr/src/app/.npmrc,required npm ci --omit=dev
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#2-install-only-production-dependencies-in-the-nodejs-docker-image
 # when NODE_ENV is set to production, npm ci automatically omits dev dependencies
 # https://docs.npmjs.com/cli/v10/commands/npm-ci#omit
@@ -161,6 +165,32 @@ CMD [ "node", "index.js" ]
 13. `USER node`
 
 - The process should be owned by the `node` user instead of `root`.
+
+14. `RUN --mount=type=secret,id=npmrc_secret,target=/usr/src/app/.npmrc,required npm ci --omit=dev`
+
+- The files mounted as secrets will be available during build, but they will not
+  remain in the final image. The secret can be any file, but npmrc is most common
+  so we use it as an example.
+  To be able to use the secret, we must pass it either as a param to Docker build or
+  define it in Docker compose.
+  Docker build example:
+  `docker build -t ntc-lms . --secret id=npmrc_secret,src=.npmrc`
+  Docker compose.yaml example:
+  ```yaml
+    services:
+      app:
+        build:
+          context: .
+          secrets:
+            - npmrc_secret
+
+    ...
+
+    secrets:
+      npmrc_secret:
+       file: .npmrc
+  ```
+
 
 ## Typescript NodeJs application
 
