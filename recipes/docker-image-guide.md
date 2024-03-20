@@ -173,9 +173,11 @@ CMD [ "node", "index.js" ]
   so we use it as an example.
   To be able to use the secret, we must pass it either as a param to Docker build or
   define it in Docker compose.
-  Docker build example:
+
+- Docker build example:
   `docker build -t ntc-lms . --secret id=npmrc_secret,src=.npmrc`
-  Docker compose.yaml example:
+
+- Docker compose.yaml example:
   ```yaml
     services:
       app:
