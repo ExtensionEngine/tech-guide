@@ -62,7 +62,12 @@ RUN --mount=type=secret,id=npmrc_secret,target=/usr/src/app/.npmrc,required npm 
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#2-install-only-production-dependencies-in-the-nodejs-docker-image
 # when NODE_ENV is set to production, npm ci automatically omits dev dependencies
 # https://docs.npmjs.com/cli/v10/commands/npm-ci#omit
+# NOTE: if we don't have secrets, this is how we install npm packages, however if we
+# do have npmrc secret, we skip this step and proceed to the next.
 RUN npm ci --omit=dev
+# we can mount .npmrc secret file without leaving the secrets in the final built image
+# refer to docs https://docs.docker.com/build/building/secrets/
+RUN --mount=type=secret,id=npmrc_secret,target=/usr/src/app/.npmrc,required npm ci --omit=dev
 
 FROM base AS configure
 WORKDIR /usr/src/app
