@@ -56,6 +56,9 @@ WORKDIR /usr/src/app
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#3-optimize-nodejs-tooling-for-production
 ENV NODE_ENV production
 COPY package*.json .
+# we can mount .npmrc secret file without leaving the secrets in the final built image
+# refer to docs https://docs.docker.com/build/building/secrets/
+RUN --mount=type=secret,id=npmrc_secret,target=/usr/src/app/.npmrc,required npm ci --omit=dev
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#2-install-only-production-dependencies-in-the-nodejs-docker-image
 # when NODE_ENV is set to production, npm ci automatically omits dev dependencies
 # https://docs.npmjs.com/cli/v10/commands/npm-ci#omit
