@@ -160,3 +160,5 @@ You might have noticed that in the case of an `OptimisticLockError`, I used a cu
 In this scenario, we could also leverage database transaction isolation levels, like SERIALIZABLE, since this transaction does not span across multiple requests. However, there is often a requirement for long-running business processes that span multiple requests. In these situations, database transactions alone are insufficient for managing concurrency throughout such an extended business transaction. For these cases, optimistic locking proves to be a highly suitable solution.
 
 You can find full working example [here](https://github.com/ikovac/teem-clone/tree/master/apps/api/src/reservation).
+
+Also, If you are interested in implementing cross-request optimistic locking, check out the [MikroORM documentation](https://mikro-orm.io/docs/transactions#optimistic-locking)
