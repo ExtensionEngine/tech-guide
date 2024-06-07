@@ -18,6 +18,7 @@
 1. [Docker image guide](./recipes/docker-image-guide.md)
 2. [AWS SES bounce handling](./recipes/ses-bounce-handling.md)
 3. [Handling concurrency using optimistic or pessimistic locking](./recipes/handling-concurrency.md)
+4. [LTI - Learning Tools Interoperability Protocol](./recipes/lti.md)
 
 ## 🙌 Want to contribute?
 
