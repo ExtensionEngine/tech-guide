@@ -68,5 +68,5 @@ The message for embedding content into the platform (LTI launch) is referred to 
 
 ## Implementation
 
-1. [Creating LTI compatible Tool](https://github.com/ikovac/lti-tool-example)
+1. [Creating LTI compatible Tool](https://github.com/ExtensionEngine/lti-tool-example)
 2. Creating LTI compatible Platform - TBA
