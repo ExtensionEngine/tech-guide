@@ -21,6 +21,10 @@
 4. [LTI - Learning Tools Interoperability Protocol](./recipes/lti.md)
 5. [CircleCI Build Guide](./recipes/circleci-build-guide.md)
 
+## Guides
+
+1. [Automated Testing](./recipes/automated-testing.md)
+
 ## 🙌 Want to contribute?
 
 We are open to all kinds of contributions. If you want to:
