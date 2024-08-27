@@ -19,6 +19,7 @@
 2. [AWS SES bounce handling](./recipes/ses-bounce-handling.md)
 3. [Handling concurrency using optimistic or pessimistic locking](./recipes/handling-concurrency.md)
 4. [LTI - Learning Tools Interoperability Protocol](./recipes/lti.md)
+5. [CircleCI Build Guide](./recipes/circleci-build-guide.md)
 
 ## 🙌 Want to contribute?
 
