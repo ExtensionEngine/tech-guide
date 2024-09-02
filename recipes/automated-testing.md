@@ -1,5 +1,48 @@
 # Automated Testing
 
+## Testing best practices
+
+Writing tests can be hard because there are a lot of things that can be tested.
+
+Starting out can be overwhelming. But since writing tests is easy, we can write
+a lot of them in no time. Don't do this. Do not focus on code coverage number as
+it can lead to false sense of security. Remember that code with 100% test coverage
+can still have bugs.
+
+Focus on test quality and test performance. Make sure the test is not asserting
+unimportant things. Make sure the test is as quick as possible. Quick tests will
+be run often. Running tests often means more early bug detection which means less
+production errors.
+
+---
+
+Deal with flaky tests immediately. Flaky tests ruin test suite confidence. A failed
+test should raise alarm immediately. If the test suite contains flaky tests, disable
+them and refactor as soon as possible.
+
+---
+
+Be careful with tests that alter database state. We want to be able to run tests
+in parallel so do not write tests that depend on each other. Each test should be
+independent of the test suite.
+
+---
+
+Test for behavior and not implementation. Rather focus on writing tests that
+follow the business logic instead of programming logic. Avoid writing parts of
+the function implementation in the actual test assertion. This will lead to tight
+coupling of tests with internal implementation and the tests will have to be fixed
+each time the logic changes.
+
+---
+
+Writing quality tests is hard and it's easy to fall into common pitfalls of testing
+that the database update function actually updates the database. Start off simple
+and as the application grows in complexity, it will be easier to determine what
+should be tested more thoroughly. It is perfectly fine to have a small test suite
+that covers the critical code and the essentials. Small suites will run faster
+which means they will be run more often.
+
 ## Types of Automated Tests
 
 There are different approaches to testing, and depending on boundaries of the
@@ -31,7 +74,7 @@ changes, we can make minimal changes to the test suite and/or mocked data.
 - Test function or class method with multiple input-output permutations
 
 #### When **not** to use
-- To test unit that integrates different application layers, such as persistence layer (database) or HTTP layer (see "Integration Tests")
+- To test unit that integrates different application layers, such as persistence layer (database) or HTTP layer (see "Integration Tests") or performs disk I/O or communicates with external system
 
 #### Best practices
 - Unit tests should execute fast (<50ms)
@@ -72,13 +115,17 @@ time decoupling logic testing and endpoint testing.
 
 #### When **not** to use
 - For testing of specific function logic. We should use unit tests for those.
+- For testing third party services. We should assume they work as expected.
 
 #### Best practices
 - Test basic API functionality and keep the tests simple.
 - If the tested endpoint makes database changes, verify that the changes were
 actually made.
+- Assert that output data is correct.
 
 #### Antipatterns
+- Aiming for code coverage percentage number. An app with 100% code coverage can
+have bugs. Instead, focus on writing meaningful, quality tests.
 
 ### API Tests
 
@@ -127,6 +174,8 @@ level (integration or unit tests).
 #### Best practices
 - Performance is key in these tests. We want to run tests as often as possible
 and good performance will allow that.
+- Flaky tests should be immediately disabled and refactored. Flaky tests will
+cause the team to ignore or bypass the tests and these should be dealt with immediately.
 
 #### Antipatterns
 
@@ -140,15 +189,29 @@ They are typically used to stress test the infrastructure and measure the throug
 of the application. They can expose bottlenecks and identify endpoints that need
 optimization.
 
+Performance tests are supposed to be run on actual production environment since
+they test the performance of code **and** infrastructure. Keep in mind actual
+users when running performance tests. Best approach is to spin up a production
+clone and run tests against that environment.
+
 #### When to use
 - To stress test infrastructure.
 - To measure how increased traffic affects load speeds and overall app performance.
 
 #### When **not** to use
+- To test if the application works according to specs.
+- To test a specific user scenario.
 
 #### Best practices
+- These tests should mimic actual human user in terms of click frequency and page
+navigation.
+- There should be multiple tests that test different paths in the system, not a
+single performance test.
 
 #### Antipatterns
+- Running these tests locally or on an environment that doesn't match production
+in terms of infrastructure performance. (tests should be developed on a local
+instance, but the actual measurements should be performed live)
 
 
 ### Visual Tests
@@ -161,9 +224,16 @@ easily indicate a change in the app. The downside is that they're not very preci
 and the engineer needs to spend some time to determine the cause of the error.
 
 #### When to use
+- When we want to cover broad range of features.
+- When we want to increase test coverage with least effort.
+- When we want to make sure there are no changes in the UI.
 
 #### When **not** to use
+- To test a specific feature or business logic.
+- To test a specific user scenario.
 
 #### Best practices
+- Have deterministic seeds so the UI always renders the same output.
+- Add as many pages as possible but keep the tests simple.
 
 #### Antipatterns
