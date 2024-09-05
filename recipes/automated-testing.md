@@ -1,18 +1,17 @@
 # Automated Testing
+## Glossary
+**Confidence** - describes a degree to which passing tests guarantee that the app is working
+**Determinism** - describes how easy it is to determine where the problem is based on the failing test
 
 ## Testing best practices
 
-Writing tests can be hard because there are a lot of things that can be tested.
+### Quality over quantity
+Don't focus on achieving a specific code coverage percentage.
+While code coverage can help us identify uncovered parts of the codebase, it doesn't guarantee high confidence.
 
-Starting out can be overwhelming. But since writing tests is easy, we can write
-a lot of them in no time. Don't do this. Do not focus on code coverage number as
-it can lead to false sense of security. Remember that code with 100% test coverage
-can still have bugs.
-
-Focus on test quality and test performance. Make sure the test is not asserting
-unimportant things. Make sure the test is as quick as possible. Quick tests will
-be run often. Running tests often means more early bug detection which means less
-production errors.
+Instead, focus on identifying important paths of the application, especially from user's perspective.
+User can be a developer using a shared function, a user interacting with the UI, or a client using server app's JSON API.
+Write tests to cover those paths in a way that gives confidence that each path, and each separate part of the path works as expected.
 
 ---
 
