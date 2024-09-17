@@ -86,7 +86,7 @@ changes, we can make minimal changes to the test suite and/or mocked data.
 
 ### Integration Tests
 
-With these tests, we test the combined behavior of multiple components within the system.
+With these tests, we test how multiple components of the system behave together.
 
 #### Infrastructure
 
