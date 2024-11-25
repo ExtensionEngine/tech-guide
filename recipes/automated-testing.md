@@ -1,7 +1,9 @@
 # Automated Testing
 ## Glossary
-**Confidence** - describes a degree to which passing tests guarantee that the app is working
-**Determinism** - describes how easy it is to determine where the problem is based on the failing test
+**Confidence** - describes a degree to which passing tests guarantee that the app is working.  
+**Determinism** - describes how easy it is to determine where the problem is based on the failing test.  
+**Use Case** - a potential scenario in which a system receives external input and responds to it. It defines the interactions between a role (user or another system) and a system to achieve a goal.  
+**Combinatiorial Explosion** - the fast growth in the number of combinations that need to be tested when multiple business rules are involved.  
 
 ## Testing best practices
 
@@ -101,7 +103,7 @@ However, mocking can still be used when needed, for example when expecting side-
 
 Integration test entry points can vary depending on the application use cases. These include services, controllers, or the API. These are not set in stone and should be taken into account when making a decision. For example:
 - A use case that can be invoked through multiple different protocols can be tested separately from them, to avoid duplication. A tradeoff in this case is the need to write some basic tests for each of the protocols.
-- A use case that will always be invokeable through a single protocol might benefit enough from only being tested using that protocol. E.g. a HTTP API route test might eliminate the need for a lower level, controller/service level test. This would also enable the testing of authorization within the same test, which might not have been possible otherwise depending on the technology used.
+- A use case that will always be invokeable through a single protocol might benefit enough from only being tested using that protocol. E.g. a HTTP API route test might eliminate the need for a lower level, controller/service level test. This would also enable testing the auth layer integration within these tests, which might not have been possible otherwise depending on the technology used.
 
 Multiple approaches can be used within the same application depending on the requirements, to provide sufficient coverage.
 
