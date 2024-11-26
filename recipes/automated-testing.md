@@ -15,9 +15,12 @@ Write tests to cover those paths in a way that gives confidence that each path, 
 
 ---
 
-Deal with flaky tests immediately. Flaky tests ruin test suite confidence. A failed
-test should raise alarm immediately. If the test suite contains flaky tests, disable
-them and refactor as soon as possible.
+Flaky tests that produce inconsistent results ruin confidence in the test suite, mask real issues, and are the source of frustration. The refactoring process to address the flakiness is crucial and should be a priority.
+To adequately deal with flaky tests it is important to know how to identify, fix, and prevent them:
+- Common characteristics of flaky tests include inconsistency, false positives and negatives, and sensitivity to dependency, timing, ordering, and environment.
+- Typical causes of the stated characteristics are concurrency, timing/ordering problems, external dependencies, non-deterministic assertions, test environment instability, and poorly written test logic.
+- Detecting flaky tests can be achieved by rerunning, running tests in parallel, executing in different environments, and analyzing test results.
+- To fix and prevent further occurrences of flaky tests the following steps can be taken, isolate tests, employ setup and cleanup routines, handle concurrency, configure a stable test environment, improve error handling, simplify testing logic, and proactively deal with typical causes of the flaky tests.
 
 ---
 
