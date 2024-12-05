@@ -1,7 +1,9 @@
 # Automated Testing
 ## Glossary
-**Confidence** - describes a degree to which passing tests guarantee that the app is working
-**Determinism** - describes how easy it is to determine where the problem is based on the failing test
+**Confidence** - describes a degree to which passing tests guarantee that the app is working.  
+**Determinism** - describes how easy it is to determine where the problem is based on the failing test.  
+**Use Case** - a potential scenario in which a system receives external input and responds to it. It defines the interactions between a role (user or another system) and a system to achieve a goal.  
+**Combinatiorial Explosion** - the fast growth in the number of combinations that need to be tested when multiple business rules are involved.  
 
 ## Testing best practices
 
@@ -89,10 +91,26 @@ changes, we can make minimal changes to the test suite and/or mocked data.
 
 ### Integration Tests
 
-With these tests, we test the application API endpoints and assert that they are
-actually working as expected.
+With these tests, we test how multiple components of the system behave together.
 
-**TODO**: do we want to add that we should run full backend for these type of tests?
+#### Infrastructure
+
+Running the tests on test infrastructure should be preferred to mocking, unlike in unit tests. Ideally, a full application instance would be run, to mimic real application behavior as close as possible.
+This usually includes running the application connected to a test database, inserting fake data into it during the test setup, and doing assertions on the current state of the database. This also means integration test code should have full access to the test infrastructure for querying. 
+> [!NOTE]
+> Regardless of whether using raw queries or the ORM, simple queries should be used to avoid introducing business logic within tests.
+
+However, mocking can still be used when needed, for example when expecting side-effects that call third party services.
+
+#### Entry points
+
+Integration test entry points can vary depending on the application use cases. These include services, controllers, or the API. These are not set in stone and should be taken into account when making a decision. For example:
+- A use case that can be invoked through multiple different protocols can be tested separately from them, to avoid duplication. A tradeoff in this case is the need to write some basic tests for each of the protocols.
+- A use case that will always be invokeable through a single protocol might benefit enough from only being tested using that protocol. E.g. a HTTP API route test might eliminate the need for a lower level, controller/service level test. This would also enable testing the auth layer integration within these tests, which might not have been possible otherwise depending on the technology used.
+
+Multiple approaches can be used within the same application depending on the requirements, to provide sufficient coverage.
+
+#### Testing surface
 
 **TODO**: do we want to write anything about mocking the DB data/seeds?
 
@@ -114,13 +132,16 @@ time decoupling logic testing and endpoint testing.
 - To verify the API endpoint performs authentication and authorization.
 - To verify user permissions for that endpoint.
 - To verify that invalid input is correctly handled.
+- To verify the basic business logic is handled correctly, both in expected success and failure cases.
+- To verify infrastructure related side-effects, e.g. database changes or calls to third party services.
 
 #### When **not** to use
-- For testing of specific function logic. We should use unit tests for those.
+- For extensive testing of business logic permutations beyond fundamental scenarios. Integration tests contain more overhead to write compared to unit tests and can easily lead to a combinatorial explosion. Instead, unit tests should be used for thorough coverage of these permutations.
 - For testing third party services. We should assume they work as expected.
 
 #### Best practices
-- Test basic API functionality and keep the tests simple.
+- Test basic functionality and keep the tests simple.
+- Prefer test infrastructure over mocking.
 - If the tested endpoint makes database changes, verify that the changes were
 actually made.
 - Assert that output data is correct.
@@ -135,9 +156,11 @@ With these tests, we want to make sure our API contract is valid and the API
 returns the expected data. That means we write tests for the publically
 available endpoints.
 
-Depending on the project setup, API tests can be covered with integration tests.
-For example, if the application only has public APIs and more devs than QAs, it
-might be a better option to add API testing in integration tests.
+> [!NOTE]
+> As mentioned in the Integration Tests section, API can be the entry point to the integration tests, meaning API tests are a subtype of integration tests. However, when we talk about API tests here, we are specifically referring to the public API contract tests, which don't have access to the internals of the application.
+
+In the cases where API routes are covered extensively with integration tests, API tests might not be needed, leaving more time for QA to focus on E2E tests.
+However, in more complex architectures (e.g. integration tested microservices behind an API gateway), API tests can be very useful.
 
 #### When to use
 - To make sure the API signature is valid.
