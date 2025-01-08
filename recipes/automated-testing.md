@@ -206,38 +206,50 @@ cause the team to ignore or bypass the tests and these should be dealt with imme
 
 ### Performance Tests
 
-These types of tests will reproduce a typical user scenario and then simulate a
-group of concurrent users and then measure the server's response time and overall
-performance.
-
-They are typically used to stress test the infrastructure and measure the throughput
-of the application. They can expose bottlenecks and identify endpoints that need
+Performance tests replicate typical user scenarios and then scale up to simulate
+concurrent users. They measure key performance metrics such as response time,
+throughput, error rate, and resource utilization. These tests help uncover
+bottlenecks and identify specific endpoints or processes that require 
 optimization.
 
-Performance tests are supposed to be run on actual production environment since
-they test the performance of code **and** infrastructure. Keep in mind actual
-users when running performance tests. Best approach is to spin up a production
-clone and run tests against that environment.
+Performance tests are supposed to be run on a production-like environment since
+they test the performance of code **and** infrastructure. It's essential to
+consider real user behavior when designing and running these tests. The best 
+practice is to create a clone of the production environment for testing
+purposes, avoiding potential disruption to actual users.
 
 #### When to use
-- To stress test infrastructure.
-- To measure how increased traffic affects load speeds and overall app performance.
+- To stress test application's infrastructure.
+- To evaluate the app’s behavior and performance under increasing traffic.
+- To identify and address bottlenecks or resource limitations in the
+application.
+- To ensure the application can handle anticipated peak traffic or usage
+patterns.
 
 #### When **not** to use
-- To test if the application works according to specs.
+- To verify functional requirements or application features.
 - To test a specific user scenario.
 
 #### Best practices
-- These tests should mimic actual human user in terms of click frequency and page
-navigation.
-- There should be multiple tests that test different paths in the system, not a
-single performance test.
+- Ensure the tests mimic actual user behavior, including realistic click
+frequency, page navigation patterns, and input actions.
+- Include diverse scenarios that represent different user journeys across the
+system, not just a single performance test.
+- Use a clone of the production environment to ensure the infrastructure matches
+real-world conditions, including hardware, network, and database configurations.
+- Schedule performance tests periodically or before major releases to catch
+regressions early.
+- Record and analyze test outcomes to understand trends over time, identify weak
+points, and track improvements.
+- Performance testing should not be a one-time task; it should be an ongoing
+process integrated into the development lifecycle.
 
 #### Antipatterns
 - Running these tests locally or on an environment that doesn't match production
 in terms of infrastructure performance. (tests should be developed on a local
 instance, but the actual measurements should be performed live)
-
+- Ensure the test data mirrors real-world conditions, including varying user
+inputs and dataset sizes.
 
 ### Visual Tests
 
