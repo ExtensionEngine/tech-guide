@@ -228,10 +228,10 @@ performance tests (K6).
 
 ### E2E Tests
 
-These tests are executed within a browser environment (Playwright, Selenium,
-etc.). The purpose of these tests is to make sure that interacting with the
-application UI produces the expected result, verifying the application’s
-functionality from a user’s perspective.
+E2E tests are executed in a browser environment using tools like Playwright,
+Selenium, or similar frameworks. The purpose of these tests is to make sure that
+interacting with the application UI produces the expected result, verifying the
+application’s functionality from a user’s perspective.
 
 Usually, these tests will cover a large portion of the codebase with least
 amount of code. Because of that, they can be the first tests to be added to
