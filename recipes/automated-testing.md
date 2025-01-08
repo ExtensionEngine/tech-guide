@@ -174,35 +174,50 @@ performance tests (K6).
 
 #### Antipatterns
 
-
 ### E2E Tests
 
-These tests are executed within a browser environment (Playwright, Selenium, etc.).
-The purpose of these tests is to make sure that interacting with the application UI
-produces the expected result.
+These tests are executed within a browser environment (Playwright, Selenium,
+etc.). The purpose of these tests is to make sure that interacting with the
+application UI produces the expected result, verifying the application’s
+functionality from a user’s perspective.
 
 Usually, these tests will cover a large portion of the codebase with least
-amount of code.
-Because of that, they can be the first tests to be added to existing project that
-has no tests or has low test coverage.
+amount of code. Because of that, they can be the first tests to be added to
+existing project that has no tests or has low test coverage.
 
-These tests should not cover all of the use cases because they are the slowest to
-run. If we need to test edge cases, we should try to implement those at a lower
-level (integration or unit tests).
+These tests should not cover all of the use cases because they are the slowest
+to run. If we need to test edge cases, we should try to implement those at a
+lower level (integration or unit tests).
 
 #### When to use
-- Test user interaction with the application UI.
+- To validate user interactions and critical workflows in the application UI.
+- For testing full system integration across multiple services or components.
 
 #### When **not** to use
 - For data validation.
 
 #### Best practices
+- Focus on the most important user workflows rather than attempting exhaustive
+coverage.
+- Each test should be able to run independently, with the environment reset to a
+known state before every test.
 - Performance is key in these tests. We want to run tests as often as possible
 and good performance will allow that.
 - Flaky tests should be immediately disabled and refactored. Flaky tests will
-cause the team to ignore or bypass the tests and these should be dealt with immediately.
+cause the team to ignore or bypass the tests and these should be dealt with
+immediately.
+- Ensure consistent data states to avoid test failures due to variability in
+backend systems or environments.
+- Run tests in parallel and isolate them from external dependencies to improve
+speed and reliability.
+- Automate E2E tests in your CI/CD pipeline to catch regressions early in the
+deployment process.
 
 #### Antipatterns
+- Avoid trying to cover all use cases or edge cases in E2E tests; these are
+better suited for unit or integration tests.
+- Don’t bypass or disable flaky tests without fixing them, as they undermine the
+test suite’s reliability.
 
 ### Performance Tests
 
