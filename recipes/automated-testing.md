@@ -279,7 +279,7 @@ the root cause of errors.
 #### When to use
 - When we want to make sure there are no changes in the UI.
 - When we want to increase test coverage with least effort.
-- During the early stages of a project, while e2e tests are still under
+- During the early stages of a project, while E2E tests are still under
 development.
 
 #### When **not** to use
@@ -297,8 +297,8 @@ tolerance) to reduce noise while detecting significant regressions.
 
 #### Antipatterns
 - Avoid creating overly complicated visual tests that try to simulate user
-behavior. These are better suited for e2e testing.
-- Visual tests should complement, not replace other types of tests like e2e
+behavior. These are better suited for E2E testing.
+- Visual tests should complement, not replace other types of tests like E2E
 tests. Over-relying on them can leave functional gaps in coverage.
 - Blindly updating snapshots without investigating failures undermines the
 purpose of visual testing and risks missing real issues.
