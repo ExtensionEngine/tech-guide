@@ -241,24 +241,37 @@ instance, but the actual measurements should be performed live)
 
 ### Visual Tests
 
-The type of test where test runner navigates to browser page, takes screenshot
-and then compares the future screenshots with the reference screenshot.
+The type of test where test runner navigates to browser page, takes snapshot and
+then compares the snapshots with the reference snapshot.
 
-These types of tests will cover a lot of ground with the least effort and can
-easily indicate a change in the app. The downside is that they're not very precise
-and the engineer needs to spend some time to determine the cause of the error.
+Visual tests allow you to quickly cover large portions of the application,
+ensuring that changes in the UI are detected without writing complex test cases.
+The downside is that they're requiring engineers to invest time in identifying
+the root cause of errors.
 
 #### When to use
-- When we want to cover broad range of features.
-- When we want to increase test coverage with least effort.
 - When we want to make sure there are no changes in the UI.
+- When we want to increase test coverage with least effort.
+- During the early stages of a project, while e2e tests are still under
+development.
 
 #### When **not** to use
 - To test a specific feature or business logic.
 - To test a specific user scenario.
 
 #### Best practices
-- Have deterministic seeds so the UI always renders the same output.
+- Ensure the UI consistently renders the same output by controlling randomness
+(e.g., setting seeds for random data or controlling API responses).
 - Add as many pages as possible but keep the tests simple.
+- Consider running visual tests at the component level to isolate and detect
+issues earlier.
+- Define acceptable thresholds for minor visual differences (e.g., pixel
+tolerance) to reduce noise while detecting significant regressions.
 
 #### Antipatterns
+- Avoid creating overly complicated visual tests that try to simulate user
+behavior. These are better suited for e2e testing.
+- Visual tests should complement, not replace other types of tests like e2e
+tests. Over-relying on them can leave functional gaps in coverage.
+- Blindly updating snapshots without investigating failures undermines the
+purpose of visual testing and risks missing real issues.
