@@ -216,8 +216,6 @@ deployment process.
 #### Antipatterns
 - Avoid trying to cover all use cases or edge cases in E2E tests; these are
 better suited for unit or integration tests.
-- Don’t bypass or disable flaky tests without fixing them, as they undermine the
-test suite’s reliability.
 
 ### Performance Tests
 
@@ -269,7 +267,7 @@ inputs and dataset sizes.
 ### Visual Tests
 
 The type of test where test runner navigates to browser page, takes snapshot and
-then compares the snapshots with the reference snapshot.
+then compares the snapshot with the reference snapshot.
 
 Visual tests allow you to quickly cover large portions of the application,
 ensuring that changes in the UI are detected without writing complex test cases.
@@ -287,8 +285,9 @@ development.
 - To test a specific user scenario.
 
 #### Best practices
-- Ensure the UI consistently renders the same output by controlling randomness
-(e.g., setting seeds for random data or controlling API responses).
+- Ensure the UI consistently renders the same output by eliminating randomness
+(e.g., by always using same seeds data or controlling API responses to always
+return same values).
 - Add as many pages as possible but keep the tests simple.
 - Consider running visual tests at the component level to isolate and detect
 issues earlier.
