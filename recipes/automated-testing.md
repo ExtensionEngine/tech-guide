@@ -244,6 +244,9 @@ patterns.
 - To test a specific user scenario.
 
 #### Best practices
+- Establish clear goals. Are you testing scalability, stability, or 
+responsiveness? Without these objectives, tests risk being unfocused, resulting
+in meaningless data.
 - Ensure the tests mimic actual user behavior, including realistic click
 frequency, page navigation patterns, and input actions.
 - Include diverse scenarios that represent different user journeys across the
