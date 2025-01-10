@@ -1,4 +1,4 @@
-# Performance Testing Antipatterns - k6 Example
+# Performance Testing - Examples
 
 ## Antipattern 1: Ignoring Think Time
 
