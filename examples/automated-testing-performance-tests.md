@@ -115,4 +115,4 @@ Based upon our test scenario inputs and results:
 
 #### Chart representation of the test execution
 
-![ramping-vus execution chart](assets/ramping-vus.png)
+![ramping-vus execution chart](../assets//images//examples/ramping-vus.png)
