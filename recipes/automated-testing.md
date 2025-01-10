@@ -247,10 +247,8 @@ patterns.
 - Establish clear goals. Are you testing scalability, stability, or 
 responsiveness? Without these objectives, tests risk being unfocused, resulting
 in meaningless data.
-- Ensure the tests mimic actual user behavior, including realistic click
-frequency, page navigation patterns, and input actions.
 - Include diverse scenarios that represent different user journeys across the
-system, not just a single performance test.
+system, not just a single performance test/scenario.
 - Use a clone of the production environment to ensure the infrastructure matches
 real-world conditions, including hardware, network, and database configurations.
 - Schedule performance tests periodically or before major releases to catch
@@ -262,10 +260,13 @@ process integrated into the development lifecycle.
 
 #### Antipatterns
 - Running these tests locally or on an environment that doesn't match production
-in terms of infrastructure performance. (tests should be developed on a local
-instance, but the actual measurements should be performed live)
-- Ensure the test data mirrors real-world conditions, including varying user
-inputs and dataset sizes.
+in terms of infrastructure performance. Tests should be developed on a local
+instance, but the actual measurements should be performed live.
+- Ignoring data variability, ensure the test data mirrors real-world conditions,
+including varying user inputs and dataset sizes. 
+- Ignoring randomness in user behavior, ensure the tests mimic actual user
+behavior, including realistic click frequency, page navigation patterns, and
+input actions.
 
 ### Visual Tests
 
