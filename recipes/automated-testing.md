@@ -280,9 +280,6 @@ the root cause of errors.
 
 #### When to use
 - When we want to make sure there are no changes in the UI.
-- When we want to increase test coverage with least effort.
-- During the early stages of a project, while E2E tests are still under
-development.
 
 #### When **not** to use
 - To test a specific feature or business logic.
