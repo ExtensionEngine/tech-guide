@@ -238,6 +238,8 @@ single performance test.
 in terms of infrastructure performance. (tests should be developed on a local
 instance, but the actual measurements should be performed live)
 
+#### [Antipattern Examples](/examples/automated-testing-performance-tests.md)
+
 
 ### Visual Tests
 

@@ -25,6 +25,10 @@
 
 1. [Automated Testing](./recipes/automated-testing.md)
 
+## Examples
+
+1. [Performance Testing - Antipattern Examples](./examples/automated-testing-performance-tests.md)
+
 ## 🙌 Want to contribute?
 
 We are open to all kinds of contributions. If you want to:

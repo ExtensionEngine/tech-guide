@@ -1,4 +1,4 @@
-# Performance Testing - Examples
+# Performance Testing - Antipattern Examples
 
 ## Antipattern 1: Ignoring Think Time
 
