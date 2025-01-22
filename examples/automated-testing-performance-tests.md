@@ -2,7 +2,13 @@
 
 ## Antipattern 1: Ignoring Think Time
 
-Not including think time between user actions can lead to unrealistic performance metrics. In this example, the user actions are executed without any delay, which is unrealistic.
+Excluding think time between user actions can result in unrealistic performance
+metrics for certain types of tests, such as average, stress, and soak tests.
+However, think time is less critical for tests like breakpoint and spike tests,
+as other parameters can control these scenarios effectively. Incorporating
+think time is crucial when simulating real user behavior based on user
+scenarios. In the provided example, user actions are executed without any delay,
+which does not accurately reflect real-world conditions for this type of test.
 
 ```javascript
 export default function () {
