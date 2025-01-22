@@ -191,12 +191,15 @@ lower level (integration or unit tests).
 
 #### When to use
 - To validate user interactions and critical workflows in the application UI.
-- For testing full system integration across multiple services or components.
+- For testing specific user flows.
+- For making sure that critical application features are working as expected.
+- For better coverage of the most common user pathways.
 
 #### When **not** to use
 - For data validation.
 
 #### Best practices
+- Tests should be atomic and simple, all complicated tests should be thrown out.
 - Focus on the most important user workflows rather than attempting exhaustive
 coverage.
 - Each test should be able to run independently, with the environment reset to a
