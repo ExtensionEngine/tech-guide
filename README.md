@@ -27,7 +27,7 @@
 
 ## Examples
 
-1. [Performance Testing - Antipattern Examples](./examples/automated-testing-performance-tests.md)
+1. [Performance Testing - Antipattern Examples](./examples/performance-testing-antipattern-examples.md)
 
 ## 🙌 Want to contribute?
 
