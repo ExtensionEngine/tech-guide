@@ -131,3 +131,23 @@ replicate delays experienced by real users while using an application.
 ### **Iteration**
 
 - A single execution of the default function in a K6 script.
+
+### **Average Test**
+
+- Assess how the system performs under a typical load for your system or application. Typical load might be a regular day in production or an average timeframe in your daily traffic.
+
+### **Stress Test**
+
+- Help you discover how the system functions with the load at peak traffic.
+
+### **Spike Test**
+
+- A spike test verifies whether the system survives and performs under sudden and massive rushes of utilization.
+
+### **Breakpoint Test**
+
+- Breakpoint tests discover your system’s limits.
+
+### **Soak Test**
+
+- Soak tests are a variation of the average-load test. The main difference is the test duration. In a soak test, the peak load is usually an average load, but the peak load duration extends several hours or even days.
