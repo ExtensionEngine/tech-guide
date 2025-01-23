@@ -174,83 +174,114 @@ performance tests (K6).
 
 #### Antipatterns
 
-
 ### E2E Tests
 
-These tests are executed within a browser environment (Playwright, Selenium, etc.).
-The purpose of these tests is to make sure that interacting with the application UI
-produces the expected result.
+E2E tests are executed in a browser environment using tools like Playwright,
+Selenium, or similar frameworks. The purpose of these tests is to make sure that
+interacting with the application UI produces the expected result, verifying the
+application’s functionality from a user’s perspective.
 
 Usually, these tests will cover a large portion of the codebase with least
-amount of code.
-Because of that, they can be the first tests to be added to existing project that
-has no tests or has low test coverage.
+amount of code. Because of that, they can be the first tests to be added to
+existing project that has no tests or has low test coverage.
 
-These tests should not cover all of the use cases because they are the slowest to
-run. If we need to test edge cases, we should try to implement those at a lower
-level (integration or unit tests).
+These tests should not cover all of the use cases because they are the slowest
+to run. If we need to test edge cases, we should try to implement those at a
+lower level (integration or unit tests).
 
 #### When to use
-- Test user interaction with the application UI.
+- To validate user interactions and critical workflows in the application UI.
+- For testing specific user flows.
+- For making sure that critical application features are working as expected.
+- For better coverage of the most common user pathways.
 
 #### When **not** to use
 - For data validation.
 
 #### Best practices
+- Tests should be atomic and simple, all complicated tests should be thrown out.
+- Focus on the most important user workflows rather than attempting exhaustive
+coverage.
+- Each test should be able to run independently, with the environment reset to a
+known state before every test.
 - Performance is key in these tests. We want to run tests as often as possible
 and good performance will allow that.
 - Flaky tests should be immediately disabled and refactored. Flaky tests will
-cause the team to ignore or bypass the tests and these should be dealt with immediately.
+cause the team to ignore or bypass the tests and these should be dealt with
+immediately.
+- Ensure consistent data states to avoid test failures due to variability in
+backend systems or environments.
+- Run tests in parallel and isolate them from external dependencies to improve
+speed and reliability.
+- Automate E2E tests in your CI/CD pipeline to catch regressions early in the
+deployment process.
 
 #### Antipatterns
+- Avoid trying to cover all use cases or edge cases in E2E tests; these are
+better suited for unit or integration tests.
 
 ### Performance Tests
 
-These types of tests will reproduce a typical user scenario and then simulate a
-group of concurrent users and then measure the server's response time and overall
-performance.
-
-They are typically used to stress test the infrastructure and measure the throughput
-of the application. They can expose bottlenecks and identify endpoints that need
+Performance tests replicate typical user scenarios and then scale up to simulate
+concurrent users. They measure key performance metrics such as response time,
+throughput, error rate, and resource utilization. These tests help uncover
+bottlenecks and identify specific endpoints or processes that require 
 optimization.
 
-Performance tests are supposed to be run on actual production environment since
-they test the performance of code **and** infrastructure. Keep in mind actual
-users when running performance tests. Best approach is to spin up a production
-clone and run tests against that environment.
+Performance tests are supposed to be run on a production-like environment since
+they test the performance of code **and** infrastructure. It's essential to
+consider real user behavior when designing and running these tests. The best 
+practice is to create a clone of the production environment for testing
+purposes, avoiding potential disruption to actual users.
 
 #### When to use
-- To stress test infrastructure.
-- To measure how increased traffic affects load speeds and overall app performance.
+- To stress test application's infrastructure.
+- To evaluate the app’s behavior and performance under increasing traffic.
+- To identify and address bottlenecks or resource limitations in the
+application.
+- To ensure the application can handle anticipated peak traffic or usage
+patterns.
 
 #### When **not** to use
-- To test if the application works according to specs.
+- To verify functional requirements or application features.
 - To test a specific user scenario.
 
 #### Best practices
-- These tests should mimic actual human user in terms of click frequency and page
-navigation.
-- There should be multiple tests that test different paths in the system, not a
-single performance test.
+- Establish clear goals. Are you testing scalability, stability, or 
+responsiveness? Without these objectives, tests risk being unfocused, resulting
+in meaningless data.
+- Include diverse scenarios that represent different user journeys across the
+system, not just a single performance test/scenario.
+- Use a clone of the production environment to ensure the infrastructure matches
+real-world conditions, including hardware, network, and database configurations.
+- Schedule performance tests periodically or before major releases to catch
+regressions early.
+- Record and analyze test outcomes to understand trends over time, identify weak
+points, and track improvements.
+- Performance testing should not be a one-time task; it should be an ongoing
+process integrated into the development lifecycle.
 
 #### Antipatterns
 - Running these tests locally or on an environment that doesn't match production
-in terms of infrastructure performance. (tests should be developed on a local
-instance, but the actual measurements should be performed live)
-
+in terms of infrastructure performance. Tests should be developed on a local
+instance, but the actual measurements should be performed live.
+- Ignoring data variability, ensure the test data mirrors real-world conditions,
+including varying user inputs and dataset sizes. 
+- Ignoring randomness in user behavior, ensure the tests mimic actual user
+behavior, including realistic click frequency, page navigation patterns, and
+input actions.
 
 ### Visual Tests
 
-The type of test where test runner navigates to browser page, takes screenshot
-and then compares the future screenshots with the reference screenshot.
+The type of test where test runner navigates to browser page, takes snapshot and
+then compares the snapshot with the reference snapshot.
 
-These types of tests will cover a lot of ground with the least effort and can
-easily indicate a change in the app. The downside is that they're not very precise
-and the engineer needs to spend some time to determine the cause of the error.
+Visual tests allow you to quickly cover large portions of the application,
+ensuring that changes in the UI are detected without writing complex test cases.
+The downside is that they're requiring engineers to invest time in identifying
+the root cause of errors.
 
 #### When to use
-- When we want to cover broad range of features.
-- When we want to increase test coverage with least effort.
 - When we want to make sure there are no changes in the UI.
 
 #### When **not** to use
@@ -258,7 +289,19 @@ and the engineer needs to spend some time to determine the cause of the error.
 - To test a specific user scenario.
 
 #### Best practices
-- Have deterministic seeds so the UI always renders the same output.
+- Ensure the UI consistently renders the same output by eliminating randomness
+(e.g., by always using same seeds data or controlling API responses to always
+return same values).
 - Add as many pages as possible but keep the tests simple.
+- Consider running visual tests at the component level to isolate and detect
+issues earlier.
+- Define acceptable thresholds for minor visual differences (e.g., pixel
+tolerance) to reduce noise while detecting significant regressions.
 
 #### Antipatterns
+- Avoid creating overly complicated visual tests that try to simulate user
+behavior. These are better suited for E2E testing.
+- Visual tests should complement, not replace other types of tests like E2E
+tests. Over-relying on them can leave functional gaps in coverage.
+- Blindly updating snapshots without investigating failures undermines the
+purpose of visual testing and risks missing real issues.
