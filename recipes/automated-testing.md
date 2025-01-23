@@ -271,6 +271,8 @@ including varying user inputs and dataset sizes.
 behavior, including realistic click frequency, page navigation patterns, and
 input actions.
 
+#### [Antipattern Examples](/examples/performance-testing-antipattern-examples.md)
+
 ### Visual Tests
 
 The type of test where test runner navigates to browser page, takes snapshot and
