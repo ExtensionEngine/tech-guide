@@ -10,7 +10,7 @@ await page.locator('a').filter({ hasText: 'More info' });
 
 ### Solution
 
-Give priority to role-based locators when identifying elements, as they most accurately reflect how users and assistive technologies interact with the page. In this case, the test locates the same `<a>` element, but in this case by its role as a link and its accessible name.
+Give priority to role-based locators when identifying elements, as they most accurately reflect how users and assistive technologies interact with the page. In this case, the test locates the same `<a>` element, but in this case by its role as a link and its accessible name, making it more resilient to structural or content changes. Additionally, this approach encourages developers to build components with better accessibility practices.
 
 ```javascript
 await page.getByRole('link', { name: 'More info' });
