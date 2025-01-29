@@ -22,6 +22,6 @@ await page.getByRole('link', { name: 'More info' });
 
 - Locators are a key component of Playwright's auto-waiting and retry mechanisms. Essentially, they provide a reliable way to identify elements on the page at any given time.
 
-### **Role Locators, Accessible Locators**
+### **Role Locators, Role Based Locators, Accessible Locators**
 
 - A type of locator that aligns with how users and assistive technologies interpret the page, such as recognizing whether an element functions as a button or a checkbox. When using role locators, it's generally recommended to include the accessible name to precisely identify the intended element.
