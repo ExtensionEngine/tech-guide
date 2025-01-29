@@ -220,6 +220,8 @@ deployment process.
 - Avoid trying to cover all use cases or edge cases in E2E tests; these are
 better suited for unit or integration tests.
 
+#### [Antipattern Examples](/examples/e2e-testing-antipattern-examples.md)
+
 ### Performance Tests
 
 Performance tests replicate typical user scenarios and then scale up to simulate
