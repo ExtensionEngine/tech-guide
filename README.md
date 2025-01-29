@@ -27,7 +27,8 @@
 
 ## Examples
 
-1. [Performance Testing - Antipattern Examples](./examples/performance-testing-antipattern-examples.md)
+1. [E2E Testing - Antipattern Examples](./examples/e2e-testing-antipattern-examples.md)
+2. [Performance Testing - Antipattern Examples](./examples/performance-testing-antipattern-examples.md)
 
 ## 🙌 Want to contribute?
 
