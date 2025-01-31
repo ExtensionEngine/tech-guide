@@ -7,16 +7,17 @@ valid according to business logic rules. The rules are that password needs to be
 between 5 and 255 characters with at least one uppercase letter, at least one
 lowercase letter, at least 2 numbers and at least 2 special characters.
 
+[Sandbox Code Examples 🔗](https://stackblitz.com/edit/node-jwphcjdk?file=unit-tests.js)
 
 ```javascript
-const http = require('http');
-const PasswordValidator = require('password-validator');
+// password-validator.js
 
-const PORT = 8000;
+import PasswordValidator from 'password-validator';
+
 const MIN_LENGTH = 10;
 const MAX_LENGTH = 255;
 
-function validatePassword(password) {
+export function validatePassword(password) {
   const passwordValidator = new PasswordValidator()
     .is().min(MIN_LENGTH)
     .is().max(MAX_LENGTH)
@@ -27,6 +28,14 @@ function validatePassword(password) {
   const result = passwordValidator.validate(password, { details: true });
   return { isValid: result.length === 0, details: result };
 }
+```
+
+```javascript
+// app.js
+
+import http from 'http';
+
+const PORT = 8000;
 
 async function handleRequest(req, res) {
   try {
@@ -51,23 +60,27 @@ Let's write some tests for the `validatePassword` function to make sure it works
 as described.
 
 ```javascript
+import { describe, mock, it } from 'node:test';
+import assert from 'node:assert/strict';
+import { validatePassword } from './password-validator.js';
+
 describe('validatePassword', function() {
   describe('successfully validates password when it', function() {
     it('is "Testing12!?"', function() {
       const { isValid } = validatePassword('Testing12!?');
-      expect(isValid).to.be(true);
+      assert.equal(isValid, true);
     });
   });
 
   describe('fails to validate password when it', function() {
     it('is not the correct length', function() {
       const { isValid } = validatePassword('Test12!?');
-      expect(isValid).to.be(false);
+      assert.equal(isValid, false);
     });
 
     it('does not contain uppercase letter', function() {
       const { isValid } = validatePassword('test12!?');
-      expect(isValid).to.be(false);
+      assert.equal(isValid, false);
     });
   });
 });
@@ -97,14 +110,14 @@ describe('validatePassword', function() {
   describe('successfully validates password when it', function() {
     it('is valid', function() {
       const { isValid } = validatePassword('Testing12!?');
-      expect(isValid).to.be(true);
+      assert.equal(isValid, true);
     });
   });
 
   describe('fails to validate password when it', function() {
     it('is invalid', function() {
       const { isValid } = validatePassword(' ');
-      expect(isValid).to.be(false);
+      assert.equal(isValid, false);
     });
   });
 });
