@@ -1,4 +1,26 @@
 # Automated Testing
+
+##### Table of contents
+
+[Glossary](#glossary)
+
+[Testing best practices](#testing-best-practices)
+
+[Types of automated tests](#types-of-automated-tests)
+
+[Unit Tests](#unit-tests)
+
+[Integration Tests](#integration-tests)
+
+[API Tests](#api-tests)
+
+[E2E Tests](#e2e-tests)
+
+[Performance Tests](#performance-tests)
+
+[Visual Tests](#visual-tests)
+
+
 ## Glossary
 **Confidence** - describes a degree to which passing tests guarantee that the app is working.  
 **Determinism** - describes how easy it is to determine where the problem is based on the failing test.  
@@ -177,7 +199,7 @@ performance tests (K6).
 ### E2E Tests
 
 E2E tests are executed in a browser environment using tools like Playwright,
-Selenium, or similar frameworks. The purpose of these tests is to make sure that
+Cypress, or similar frameworks. The purpose of these tests is to make sure that
 interacting with the application UI produces the expected result, verifying the
 application’s functionality from a user’s perspective.
 
