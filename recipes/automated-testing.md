@@ -110,6 +110,8 @@ changes, we can make minimal changes to the test suite and/or mocked data.
 - Mocking infrastructure parts such as database I/O - instead, revert the control by using the `AppService`, `Command` or `Query` to integrate unit implementing business logic with the infrastructure layer of the application
 - Monkey-patching dependencies used by the unit - instead, pass the dependencies through the constructor or method, so that you can pass the mocks or stubs in the test
 
+[Test Examples](../examples/unit-testing-examples.md)
+
 
 ### Integration Tests
 
