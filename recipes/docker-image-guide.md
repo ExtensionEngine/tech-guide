@@ -48,7 +48,6 @@ FROM node:20.9-bookworm-slim@sha256:c325fe5059c504933948ae6483f3402f136b96492dff
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application
 # https://github.com/Yelp/dumb-init
 RUN apt update && apt install -y --no-install-recommends dumb-init
-ENTRYPOINT ["dumb-init", "--"]
 
 FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bbd7e0822f9ca8603 AS install
 # https://www.pathname.com/fhs/pub/fhs-2.3.html#USRSRCSOURCECODE
@@ -76,6 +75,8 @@ FROM configure AS run
 ENV NODE_ENV production
 # https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html#4-dont-run-containers-as-root
 USER node
+# https://docs.docker.com/build/building/best-practices/#entrypoint
+ENTRYPOINT ["dumb-init", "--"]
 CMD [ "node", "index.js" ]
 ```
 
@@ -113,26 +114,22 @@ CMD [ "node", "index.js" ]
   adds an additional layer which affects the final size. That being said, it is
   recommended whenever is possible to chain RUN commands into single command.
 
-5. `ENTRYPOINT ["dumb-init", "--"]`
-
-- As explained above, we are using dump-init as PID 1 process.
-
-6. `FROM node:20.9-bookworm@sha256:3c...603 AS install`
+5. `FROM node:20.9-bookworm@sha256:3c...603 AS install`
 
 - For dependency installation (and later for the build phase), we use the
   standard `bookworm` image instead of the `slim` version because certain
   dependencies require additional tools for the compilation step.
 
-7. `WORKDIR /usr/src/app`
+6. `WORKDIR /usr/src/app`
 
 - Application code should be placed inside `/usr/src` subdirectory.
 
-8. `ENV NODE_ENV production`
+7. `ENV NODE_ENV production`
 
 - If you are building your image for production this ensures that all frameworks
   and libraries are using the optimal settings for performance and security.
 
-9. `COPY package*.json .`
+8. `COPY package*.json .`
 
 - It's important to notice here that we are copying `package*.json` files
   separate from the rest of the codebase. By doing so, we are leveraging Docker
@@ -141,13 +138,13 @@ CMD [ "node", "index.js" ]
   By copying source code files after dependency installation, we are only
   re-executing those steps that come after that step, including that step.
 
-10. `RUN npm ci --omit=dev`
+9. `RUN npm ci --omit=dev`
 
 - devDependencies are not essential for the application to work. By installing
   only production dependencies we are reducing security risks and image
   footprint size and also improving build speed.
 
-11. `COPY --chown=node:node --from=install /usr/src/app/node_modules ./node_modules`
+10. `COPY --chown=node:node --from=install /usr/src/app/node_modules ./node_modules`
 
 - From the install phase we are copying only the node_modules folder in order
   to keep the final Docker image minimal.
@@ -157,16 +154,22 @@ CMD [ "node", "index.js" ]
   `node` is the least privileged user and by selecting it, we are limiting the
   number of actions an attacker can do in case our application gets compromised.
 
-12. `COPY --chown=node:node ./index.js .`
+11. `COPY --chown=node:node ./index.js .`
 
 - Copy the rest of the codebase as described in step 9. For this example, we
   are copying only the `index.js` file because that is the only file we need in
   order to run our application. Avoid adding unnecessary files to your builds by
   explicitly stating the files or directories you intend to copy over.
 
-13. `USER node`
+12. `USER node`
 
 - The process should be owned by the `node` user instead of `root`.
+
+13. `ENTRYPOINT ["dumb-init", "--"]`
+
+- Use the exec form to run as PID 1 process and provide default arguments with `CMD`.
+- Define runtime configuration (`ENTRYPOINT` and `CMD`) in the final stage of
+  multi-stage build to enforce consistency, explicitness, and security.
 
 14. `RUN --mount=type=secret,id=npmrc_secret,target=/usr/src/app/.npmrc,required npm ci --omit=dev`
 
@@ -180,6 +183,7 @@ CMD [ "node", "index.js" ]
   `docker build -t ntc-lms . --secret id=npmrc_secret,src=.npmrc`
 
 - Docker compose.yaml example:
+
   ```yaml
     services:
       app:
@@ -194,7 +198,6 @@ CMD [ "node", "index.js" ]
       npmrc_secret:
        file: .npmrc
   ```
-
 
 ## Typescript NodeJs application
 
@@ -218,7 +221,6 @@ CMD [ "node", "index.js" ]
 ```dockerfile
 FROM node:20.9-bookworm-slim@sha256:c325fe5059c504933948ae6483f3402f136b96492dff640ced5dfa1f72a51716 AS base
 RUN apt update && apt install -y --no-install-recommends dumb-init
-ENTRYPOINT ["dumb-init", "--"]
 
 FROM node:20.9-bookworm@sha256:3c48678afb1ae5ca5931bd154d8c1a92a4783555331b535bbd7e0822f9ca8603 AS build
 WORKDIR /usr/src/app
@@ -241,6 +243,7 @@ COPY --chown=node:node --from=install /usr/src/app/node_modules ./node_modules
 FROM configure AS run
 ENV NODE_ENV production
 USER node
+ENTRYPOINT ["dumb-init", "--"]
 CMD [ "node", "dist/index.js" ]
 ```
 
